@@ -1,23 +1,39 @@
 name: Build Berkelium and Kivy-Berkelium
 
 on:
+  # Trigger on every push to any branch
   push:
     branches:
-      - main
+      - '*'  # This triggers the action on any branch push
+
+  # Trigger on every pull request to any branch
   pull_request:
     branches:
-      - main
+      - '*'  # This triggers the action on any pull request targeting any branch
+
+  # Optionally, you can trigger the workflow on specific events, such as:
+  # - on tag creation, or
+  # - on schedule (cron job)
+  # Uncomment if needed
+  # schedule:
+  #   - cron: '0 0 * * *'  # Trigger at midnight UTC every day (e.g., a scheduled daily run)
+  # workflow_dispatch:   # Allows manual triggering of the workflow from the GitHub UI
+  #   inputs:
+  #     branch:
+  #       description: 'Which branch to deploy'
+  #       required: true
+  #       default: 'main'
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04  # Runs the job on an Ubuntu 22.04 runner
 
     steps:
-    # Step 1: Checkout the code
+    # Step 1: Checkout the repository to get the latest code changes
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 2: Set up dependencies
+    # Step 2: Install necessary dependencies
     - name: Install required dependencies
       run: |
         sudo apt-get update
@@ -41,7 +57,7 @@ jobs:
         cd kivy-berkelium
         make
 
-    # Step 5: Move the .kex file to the dist folder
+    # Step 5: Rename the zip file to .kex as per the instructions
     - name: Rename the Kivy-Berkelium zip file
       run: |
         mv dist/berkelium-1.3.linux-x86_64.zip dist/berkelium-1.3.linux-x86_64.kex
