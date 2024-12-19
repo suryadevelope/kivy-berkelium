@@ -6,7 +6,6 @@ project. Check http://berkelium.org/ for more information about it. We are using
 a patched version of Berkelium, available at https://github.com/tito/berkelium
 (branch chromium8-alternate-bin)
 
-
 Notes
 -----
 
